@@ -12,22 +12,16 @@ const List : FC = () => {
   //? https://firebase.google.com/docs/database/web/read-and-write
   useEffect(() => {
     const birdsRef = ref(db, 'birds/')
-    const unsubscribe = onValue(birdsRef, (snapShot) => {
+    const unsubscribe = onValue(birdsRef, (snapShot) => {      
+      const birdList = Object.keys(snapShot.val()).map((key) => {
+        console.log('key:', key)
+        console.log('value:', snapShot.val()[key])
 
-      // Two options: 1) Can get key and val separately and bind
-      snapShot.forEach((data) => {
+        const bird = snapShot.val()[key]
 
-        console.log(data.key)
-        console.log(data.val())
+        setBirds((previous) => ([...previous, { ...bird, id: key }]))
       })
-
-      // Can get the object as one and put the key in the object too
-      const data: Bird[] = snapShot.val()
-      if (data !== null) {
-        Object.values(data).map((bird) => {
-          setBirds((previous) => [...previous, bird])
-        })
-      }
+      
     })
 
     return unsubscribe
@@ -50,8 +44,9 @@ const List : FC = () => {
 
       <div>
 
-        { birds.map((bird) => (
+      { birds.map((bird) => (
           <>
+            <div>{bird.id}</div>
             <div>{bird.commonName}</div>
             <div>{bird.species}</div>
             <div>{bird?.sightingCount}</div>

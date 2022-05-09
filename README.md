@@ -36,3 +36,4 @@ Introduction into reading and writing data into a firebase database using React.
 
     2. Add .env file with all variables
 
+5. Choosing [database provider](https://firebase.google.com/docs/firestore/rtdb-vs-firestore)

@@ -5,7 +5,7 @@ import { getFirestoreDatabase } from '../services/firebase.service';
 
 const Sightings : FC = () => {
   const db = getFirestoreDatabase();
-  const [redShoulderHawk, setRedShoulderHawk] = useState<number>()
+  const [sightingCount, setSightingCount] = useState<number>()
 
   // Reading Data:
   //   To read data at a path and listen for changes
@@ -14,7 +14,7 @@ const Sightings : FC = () => {
     const redShoulderRef = ref(db, 'birds/1')
     const unsubscribe = onValue(redShoulderRef, (snapShot) => {
       const data: Bird = snapShot.val()
-      setRedShoulderHawk(data.sightingCount)
+      setSightingCount(data.sightingCount)
     })
 
     return unsubscribe
@@ -22,8 +22,8 @@ const Sightings : FC = () => {
 
   return (
     <div>
-
-      { redShoulderHawk }
+      <span>Red Shoulder Sightings: </span>
+      { sightingCount }
 
     </div>
   )
