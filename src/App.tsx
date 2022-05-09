@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Add from './pages/Add'
-import List from './pages/List'
+import AddWithPicture from './pages/AddWithPicture'
 import ListWithKeyGen from './pages/ListWithKeyGen'
 import Sightings from './pages/Sightings'
 import { setupFirebase } from './services/firebase.service'
@@ -18,7 +18,7 @@ function App() {
         {/* <Sightings /> */}
         <Add />
 
-        {/* <List /> */}
+        <AddWithPicture />
 
         <ListWithKeyGen />
 
