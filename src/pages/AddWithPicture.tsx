@@ -1,12 +1,12 @@
 import { ChangeEvent, useState } from 'react'
 import { push, ref as dbRef } from 'firebase/database'
 import { uploadBytes, ref } from 'firebase/storage';
-import { getFirestoreDatabase, useFirebaseStorage } from '../services/firebase.service';
+import { useRealtimeDatabase, useStorage } from '../services/firebase.service';
 
 const AddWithPicture = () => {
   // Add a bird to db with picture (picture in storage)
-  const db = getFirestoreDatabase()
-  const storage = useFirebaseStorage()
+  const db = useRealtimeDatabase()
+  const storage = useStorage()
   const birdRef = dbRef(db, 'birds/')
   const [picture, setPicture] = useState<File>()
 

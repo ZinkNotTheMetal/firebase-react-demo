@@ -32,7 +32,7 @@ export const setupFirebase = () => {
 
 let database: ReturnType<typeof getDatabase>;
 
-export const getFirestoreDatabase = () => {
+export const useRealtimeDatabase = () => {
   if (!database) {
     database = getDatabase(firebaseApp)
     if (useEmulator === true) {
@@ -44,7 +44,7 @@ export const getFirestoreDatabase = () => {
 
 let storage: ReturnType<typeof getStorage>;
 
-export const useFirebaseStorage = () => {
+export const useStorage = () => {
   if (!storage) {
     storage = getStorage();
     if (useEmulator === true) {

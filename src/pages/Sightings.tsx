@@ -1,10 +1,10 @@
 import { onValue, ref } from 'firebase/database';
 import React, { FC, useEffect, useState } from 'react'
 import Bird from '../models/Bird.model';
-import { getFirestoreDatabase } from '../services/firebase.service';
+import { useRealtimeDatabase } from '../services/firebase.service';
 
 const Sightings : FC = () => {
-  const db = getFirestoreDatabase();
+  const db = useRealtimeDatabase();
   const [sightingCount, setSightingCount] = useState<number>()
 
   // Reading Data:

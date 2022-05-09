@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react'
 import { push, ref, set } from 'firebase/database'
 import Bird from '../models/Bird.model'
-import { getFirestoreDatabase } from '../services/firebase.service'
+import { useRealtimeDatabase } from '../services/firebase.service'
 
 const Add : FC = () => {
-  const db = getFirestoreDatabase();
+  const db = useRealtimeDatabase();
   const initialBird : Bird = {
     commonName: '',
     sightingCount: 1,

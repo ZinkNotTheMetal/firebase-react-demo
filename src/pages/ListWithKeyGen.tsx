@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from 'react'
 import { onValue, ref, remove, set, update, increment } from 'firebase/database';
 import Bird from '../models/Bird.model';
-import { getFirestoreDatabase } from '../services/firebase.service';
+import { useRealtimeDatabase } from '../services/firebase.service';
 
 const List : FC = () => {
-  const db = getFirestoreDatabase();
+  const db = useRealtimeDatabase();
   const [birds, setBirds] = useState<Bird[]>([])
 
   // Reading Data:
