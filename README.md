@@ -37,3 +37,31 @@ Introduction into reading and writing data into a firebase database using React.
     2. Add .env file with all variables
 
 5. Choosing [database provider](https://firebase.google.com/docs/firestore/rtdb-vs-firestore)
+
+6. Disabling reading / writing
+
+    [Storage Security Rules](https://firebase.google.com/docs/storage/security)
+
+   ```javascript
+   rules_version = '2';
+    service firebase.storage {
+        match /b/{bucket}/o {
+            match /{allPaths=**} {
+            allow read, write: if
+                request.time < timestamp.date(2022, 6, 8);
+            }
+        }
+    }
+   ```
+
+   [Database Security Rules](https://firebase.google.com/docs/database/security/)
+
+   ```javascript
+   {
+      "rules": {
+        ".read": true,  // 2022-6-7
+        ".write": true,  // 2022-6-7
+      }
+    }
+   ```
+
