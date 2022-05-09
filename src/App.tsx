@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <header className="App-header">
 
-        <Sightings />
+        {/* <Sightings /> */}
         <Add />
 
         {/* <List /> */}

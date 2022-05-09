@@ -4,6 +4,6 @@ export default interface Bird {
   commonName: string
   sex?: 'Male' | 'Female'
   weight?: number
-  sightingCount?: number
+  sightingCount: number
   // Picture...
 }

@@ -51,14 +51,14 @@ const List : FC = () => {
       <div>
 
         { birds.map((bird) => (
-          <>
+          <div key={bird.id}>
             <div>{bird.commonName}</div>
             <div>{bird.species}</div>
             <div>{bird?.sightingCount}</div>
             <div>{bird?.weight}</div>
             <button onClick={addSighting}>Add Sighting!</button>
             <button onClick={() => removeBird('1')}>Remove Bird</button>
-          </>
+          </div>
         ))}
 
       </div>

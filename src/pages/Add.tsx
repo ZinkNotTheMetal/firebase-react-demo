@@ -1,25 +1,35 @@
-import { FC, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { push, ref, set } from 'firebase/database'
 import Bird from '../models/Bird.model'
 import { getFirestoreDatabase } from '../services/firebase.service'
 
 const Add : FC = () => {
   const db = getFirestoreDatabase();
-  const [birdToAdd, setBirdToAdd] = useState<Bird>({} as Bird)
+  const initialBird : Bird = {
+    commonName: '',
+    sightingCount: 1,
+    species: '',
+  }
+  const [birdToAdd, setBirdToAdd] = useState<Bird>(initialBird)
 
   // Writing Data:
   //? https://firebase.google.com/docs/database/web/read-and-write
-  const createNew = () => {
+  const createNew = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     // Add new bird to collection (note: will add a new ID as well)
     const birdRef = ref(db, 'birds')
     const newBirdRef = push(birdRef)
     
     console.log(birdToAdd)
-    set(newBirdRef, birdToAdd)
-
-    //?: Adding a single bird (id doesn't matter)
-  
+    set(newBirdRef, {
+      ...birdToAdd,
+      sightingCount: 1,
+      sex: 'Male'
+    })
+      .then(() => {
+        setBirdToAdd(initialBird)
+      })
   
     //?: Adding single object to database (id matters)
     // const redShoulderHawk: Bird = {
@@ -35,7 +45,7 @@ const Add : FC = () => {
   }
 
   return (
-    <form onSubmit={(e) => createNew()}>
+    <form onSubmit={(e) => createNew(e)}>
       <div>
         <label>
           <span>Species</span>
@@ -44,7 +54,7 @@ const Add : FC = () => {
             value={birdToAdd.species}
             onChange={(e) => setBirdToAdd((previous) => ({
               ...previous,
-              species: e.target.value
+              species: e.target.value.trim()
             }))}
           />
         </label>
