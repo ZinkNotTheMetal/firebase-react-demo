@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import Add from './pages/Add'
+import List from './pages/List'
+import Sightings from './pages/Sightings'
 import { setupFirebase } from './services/firebase.service'
 
 function App() {
@@ -11,7 +13,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <Add />
+
+        <Sightings />
+        <Add />
       </header>
       
     </div>
