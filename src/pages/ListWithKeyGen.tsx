@@ -1,17 +1,19 @@
 import { FC, useEffect, useState } from 'react'
-import { onValue, ref, remove, set, update, increment } from 'firebase/database';
+import { onValue, ref as dbRef, remove, set, update, increment } from 'firebase/database';
+import { deleteObject, listAll, ref as sRef } from 'firebase/storage'
 import Bird from '../models/Bird.model';
-import { useRealtimeDatabase } from '../services/firebase.service';
+import { useRealtimeDatabase, useStorage } from '../services/firebase.service';
 
 const List : FC = () => {
   const db = useRealtimeDatabase();
+  const storage = useStorage();
   const [birds, setBirds] = useState<Bird[]>([])
 
   // Reading Data:
   //   To read data at a path and listen for changes
   //? https://firebase.google.com/docs/database/web/read-and-write
   useEffect(() => {
-    const birdsRef = ref(db, 'birds/')
+    const birdsRef = dbRef(db, 'birds/')
     const unsubscribe = onValue(birdsRef, (snapShot) => {
       const allBirds: Bird[] = Object.keys(snapShot.val()).map((key) => ({
         id: key,
@@ -30,16 +32,26 @@ const List : FC = () => {
   //? https://firebase.google.com/docs/database/web/read-and-write#update_specific_fields
   const addSighting = (id: string) => {
     console.log('add sighting id:', id)
-    update(ref(db, `birds/${id}`), {
+    update(dbRef(db, `birds/${id}`), {
       sightingCount: increment(1)
     })
   }
 
   const removeBird = (id: string) => {
     // Remove works - need to figure out key
-    remove(ref(db, 'birds/' + id))
+    remove(dbRef(db, 'birds/' + id))
       .then(() => {
         setBirds((previous) => (previous.filter((f) => f.id !== id)))
+
+        // delete all images of birds
+        const picturesRef = sRef(storage, `images/${id}`)
+        listAll(picturesRef)
+          .then((response) => {
+            response.items.forEach((item) => {
+              console.log(item.fullPath)
+              deleteObject(item)
+            })
+          })
       })
   }
   
