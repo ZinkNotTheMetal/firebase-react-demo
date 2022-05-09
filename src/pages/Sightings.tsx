@@ -12,10 +12,12 @@ const Sightings : FC = () => {
   //? https://firebase.google.com/docs/database/web/read-and-write
   useEffect(() => {
     const redShoulderRef = ref(db, 'birds/1')
-    onValue(redShoulderRef, (snapShot) => {
+    const unsubscribe = onValue(redShoulderRef, (snapShot) => {
       const data: Bird = snapShot.val()
       setRedShoulderHawk(data.sightingCount)
     })
+
+    return unsubscribe
   }, [])
 
   return (
