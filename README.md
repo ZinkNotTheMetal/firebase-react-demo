@@ -65,3 +65,40 @@ Introduction into reading and writing data into a firebase database using React.
     }
    ```
 
+7. Running the emulator
+
+* [Introduction to the Emulator](https://firebase.google.com/docs/emulator-suite)
+
+* [Setting up the Emulator](https://firebase.google.com/docs/emulator-suite/connect_and_prototype)
+
+* [Ports and more Information](https://firebase.google.com/docs/emulator-suite/install_and_configure)
+
+* Before installing the Emulator Suite you will need:
+    1. Node.js version 8.0 or higher
+
+    2. Java version 1.8 or higher
+
+       ```bash
+       choco install oraclejdk
+       ```
+
+    ```bash
+    npm i -g firebase-tools
+    ```
+
+    After installation, run the initialize (will setup everything you need to run the emulators)
+
+    ```bash
+    firebase init
+    ```
+
+    ```bash
+    firebase init emulators
+    ```
+
+    Running the emulators
+
+    ```bash
+    firebase emulators:start
+    ```
+

@@ -5,7 +5,11 @@ import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import { connectStorageEmulator, getStorage } from 'firebase/storage';
 
 let firebaseApp: FirebaseApp;
-const useEmulator = import.meta.env.VITE_USE_FIREBASE_EMULATOR ?? false;
+// Enable if you want local emulation.
+//*  firebase emulators:start
+//! Attempted to read from .env w/ Vite config but no luck
+//! not sure why but just forcing it like this below works fine.
+const useLocalEmulator = true;
 
 export const setupFirebase = () => {
   try {
@@ -24,9 +28,7 @@ export const setupFirebase = () => {
     // eslint-disable-next-line no-console
     console.error({ error })
   }
-  // eslint-disable-next-line no-console
-  console.log('use emulator:', useEmulator)
-
+  
   return firebaseApp;
 };
 
@@ -35,8 +37,9 @@ let database: ReturnType<typeof getDatabase>;
 export const useRealtimeDatabase = () => {
   if (!database) {
     database = getDatabase(firebaseApp)
-    if (useEmulator === true) {
-      connectDatabaseEmulator(database, 'localhost', 8081)
+    if (useLocalEmulator) {
+      connectDatabaseEmulator(database, 'localhost', 9000)
+      console.log('connected to db emulator')
     }
   }
   return database;
@@ -47,8 +50,10 @@ let storage: ReturnType<typeof getStorage>;
 export const useStorage = () => {
   if (!storage) {
     storage = getStorage();
-    if (useEmulator === true) {
+    if (useLocalEmulator) {
       connectStorageEmulator(storage, 'localhost', 9199);
+      console.log('connected to storage emulator')
+
     }
   }
   return storage;
